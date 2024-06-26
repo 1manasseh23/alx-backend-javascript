@@ -1,3 +1,4 @@
+#!/usr/bin/node
 /**
  * Function to return a specific task string.
  * 
