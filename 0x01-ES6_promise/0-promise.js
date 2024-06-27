@@ -1,4 +1,4 @@
-export default function getFullResponseFromAPI(success) {
+export default function getFullResponseFromAPI() {
     return Promise.resolve();
   }
   
