@@ -1,7 +1,3 @@
-export default function getFullResponseFromAPI(success) {
-  return success ? Promise.resolve({ status: 200, body: 'Success' }) : Promise.reject(Error('The fake API is not working currently'));
-}
-/*
 function getFullResponseFromAPI(success) {
   return new Promise((resolve, reject) => {
     if (success) {
@@ -13,4 +9,4 @@ function getFullResponseFromAPI(success) {
 }
 
 export default getFullResponseFromAPI;
-*/
+
