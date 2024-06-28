@@ -1,5 +1,5 @@
-import uploadPhoto from './utils'; // Assuming utils.js exports both functions
-import createUser from './utils'; // Assuming utils.js exports both functions
+import { uploadPhoto, createUser } from './utils'; // Assuming utils.js exports both functions
+// import createUser from './utils'; Assuming utils.js exports both functions
 
 async function handleProfileSignup() {
   try {
