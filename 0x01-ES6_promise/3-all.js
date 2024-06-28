@@ -7,7 +7,7 @@ async function handleProfileSignup() {
       return Promise.all([
       uploadPhoto(),
       createUser(),
-    ]).then(([uploadPhoto, createUser]) => {console.log(uploadPhoto.body, createUser.firstName, createUser.lastName);})
+    ]).then(([uploadPhoto, createUser]) => { console.log(uploadPhoto.body, createUser.firstName, createUser.lastName); })
 
     // console.log(photoResponse.body, userResponse.firstName, userResponse.lastName);
   } catch (error) {
