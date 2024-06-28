@@ -1,4 +1,3 @@
-/*
 function getResponseFromAPI(success) {
   return new Promise((resolve, reject) => {
     if (success) {
@@ -10,7 +9,7 @@ function getResponseFromAPI(success) {
 }
 
 export default getResponseFromAPI;
-*/
+/*
 function getFullResponseFromAPI(success) {
   return new Promise((resolve, reject) => {
     if (success) {
@@ -22,3 +21,4 @@ function getFullResponseFromAPI(success) {
 }
 
 export default getFullResponseFromAPI;
+*/
