@@ -1,18 +1,16 @@
-// DirectorInterface.ts
+// DirectorInterface
 interface DirectorInterface {
   workFromHome(): string;
   getCoffeeBreak(): string;
   workDirectorTasks(): string;
 }
 
-// TeacherInterface.ts
 interface TeacherInterface {
   workFromHome(): string;
   getCoffeeBreak(): string;
   workTeacherTasks(): string;
 }
 
-// Director.ts
 class Director implements DirectorInterface {
   workFromHome(): string {
     return 'Working from home';
@@ -27,7 +25,7 @@ class Director implements DirectorInterface {
   }
 }
 
-// Teacher.ts
+// Teacher
 class Teacher implements TeacherInterface {
   workFromHome(): string {
     return 'Cannot work from home';
@@ -42,7 +40,7 @@ class Teacher implements TeacherInterface {
   }
 }
 
-// createEmployee.ts
+// createEmployee
 function createEmployee(salary: number | string): Director | Teacher {
   if (typeof salary === 'number' && salary < 500) {
     return new Teacher();
@@ -55,7 +53,7 @@ function createEmployee(salary: number | string): Director | Teacher {
   // console.log(createEmployee('$500'));
 
   // 6. Creating functions specific to employees 
-  // isDirector.ts
+  // isDirector
 function isDirector(employee: DirectorInterface | TeacherInterface): employee is DirectorInterface {
   return (employee as DirectorInterface).workDirectorTasks !== undefined;
 }
@@ -72,10 +70,10 @@ function executeWork(employee: DirectorInterface | TeacherInterface): void {
 // executeWork(createEmployee(1000));
 
 // 7. String literal types
-// Subjects.ts
+// Subjects
 type Subjects = 'Math' | 'History';
 
-// teachClass.ts
+// teachClass
 function teachClass(todayClass: Subjects): string {
   if (todayClass === 'Math') {
     return 'Teaching Math';
