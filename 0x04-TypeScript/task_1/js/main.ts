@@ -26,9 +26,9 @@ class Teacher {
 
 const teacher3: Teacher = {
   firstName: 'John',
-  lastName: 'Doe',
   fullTimeEmployee: false,
-  loccation: 'Jos',
+  lastName: 'Doe',
+  location: 'Jos',
   contract: false,
 };
 
