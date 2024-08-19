@@ -1,3 +1,4 @@
+// defind class Teacher
 class Teacher {
   firstName: string;
   lastName: string;

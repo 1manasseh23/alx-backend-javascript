@@ -6,7 +6,6 @@ interface Student {
   location: string;
 }
 
-// Create two student objects
 const student1: Student = {
   firstName: 'John',
   lastName: 'Doe',
@@ -21,10 +20,8 @@ const student2: Student = {
   location: 'San Francisco',
 };
 
-// Create an array of students
 const studentsList: Student[] = [student1, student2];
 
-// Function to render the table
 function renderTable(students: Student[]): void {
   // Get the container element
   const container = document.createElement('div');
@@ -32,7 +29,6 @@ function renderTable(students: Student[]): void {
   // Create the table element
   const table = document.createElement('table');
 
-  // Loop through the students and create a new row for each
   students.forEach((student) => {
     const row = document.createElement('tr');
     const nameCell = document.createElement('td');
@@ -50,5 +46,4 @@ function renderTable(students: Student[]): void {
   document.body.appendChild(container);
 }
 
-// Call the renderTable function with the studentsList
 renderTable(studentsList);
