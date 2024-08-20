@@ -1,36 +1,128 @@
-// Require express to create the server
 const express = require('express');
-const countStudents = require('./3-read_file_async');
+const fs = require('fs');
 
-// Create an instance of Express
 const app = express();
+const PORT = 1245;
+const DB_FILE = process.argv.length > 2 ? process.argv[2] : '';
 
-// Get the database file path from the command line arguments
-const databasePath = process.argv[2];
 
-// Define the route for the root path "/"
-app.get('/', (req, res) => {
-    res.send('Hello Holberton School!');
+const countStudents = (dataPath) => new Promise((resolve, reject) => {
+  if (!dataPath) {
+    reject(new Error('Cannot load the database'));
+  }
+  if (dataPath) {
+    fs.readFile(dataPath, (err, data) => {
+      if (err) {
+        reject(new Error('Cannot load the database'));
+      }
+      if (data) {
+        const reportParts = [];
+        const fileLines = data.toString('utf-8').trim().split('\n');
+        const studentGroups = {};
+        const dbFieldNames = fileLines[0].split(',');
+        const studentPropNames = dbFieldNames.slice(
+          0,
+          dbFieldNames.length - 1,
+        );
+
+        for (const line of fileLines.slice(1)) {
+          const studentRecord = line.split(',');
+          const studentPropValues = studentRecord.slice(
+            0,
+            studentRecord.length - 1,
+          );
+          const field = studentRecord[studentRecord.length - 1];
+          if (!Object.keys(studentGroups).includes(field)) {
+            studentGroups[field] = [];
+          }
+          const studentEntries = studentPropNames.map((propName, idx) => [
+            propName,
+            studentPropValues[idx],
+          ]);
+          studentGroups[field].push(Object.fromEntries(studentEntries));
+        }
+
+        const totalStudents = Object.values(studentGroups).reduce(
+          (pre, cur) => (pre || []).length + cur.length,
+        );
+        reportParts.push(`Number of students: ${totalStudents}`);
+        for (const [field, group] of Object.entries(studentGroups)) {
+          reportParts.push([
+            `Number of students in ${field}: ${group.length}.`,
+            'List:',
+            group.map((student) => student.firstname).join(', '),
+          ].join(' '));
+        }
+        resolve(reportParts.join('\n'));
+      }
+    });
+  }
 });
 
-// Define the route for the path "/students"
-app.get('/students', (req, res) => {
-    res.write('This is the list of our students\n');
-
-    countStudents(databasePath)
-        .then(() => {
-            res.end();
-        })
-        .catch((error) => {
-            res.write(error.message);
-            res.end();
-        });
+app.get('/', (_, res) => {
+  res.send('Hello Holberton School!');
 });
 
-// The server listens on port 1245
-app.listen(1245, () => {
-    console.log('Server is running on port 1245');
+app.get('/students', (_, res) => {
+  const responseParts = ['This is the list of our students'];
+
+  countStudents(DB_FILE)
+    .then((report) => {
+      responseParts.push(report);
+      const responseText = responseParts.join('\n');
+      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Content-Length', responseText.length);
+      res.statusCode = 200;
+      res.write(Buffer.from(responseText));
+    })
+    .catch((err) => {
+      responseParts.push(err instanceof Error ? err.message : err.toString());
+      const responseText = responseParts.join('\n');
+      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Content-Length', responseText.length);
+      res.statusCode = 200;
+      res.write(Buffer.from(responseText));
+    });
 });
 
-// Export the app for use in other modules
+app.listen(PORT, () => {
+  console.log(`Server listening on PORT ${PORT}`);
+});
+
 module.exports = app;
+// // Require express to create the server
+// const express = require('express');
+// const countStudents = require('./3-read_file_async');
+
+// // Create an instance of Express
+// const app = express();
+
+// // Get the database file path from the command line arguments
+// const databasePath = process.argv[2];
+
+// // Define the route for the root path "/"
+// app.get('/', (req, res) => {
+//     res.send('Hello Holberton School!');
+// });
+
+// // Define the route for the path "/students"
+// app.get('/students', (req, res) => {
+//     res.write('This is the list of our students\n');
+
+//     countStudents(databasePath)
+//         .then(() => {
+//             res.end();
+//         })
+//         .catch((error) => {
+//             res.write(error.message);
+//             res.end();
+//         });
+// });
+
+// // The server listens on port 1245
+// app.listen(1245, () => {
+//     console.log('Server is running on port 1245');
+// });
+
+// // Export the app for use in other modules
+// module.exports = app;
