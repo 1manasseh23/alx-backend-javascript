@@ -5,7 +5,10 @@ const app = express();
 const PORT = 1245;
 const DB_FILE = process.argv.length > 2 ? process.argv[2] : '';
 
-
+/**
+ * Counts the students in a CSV data file.
+ * @param {String} dataPath The path to the CSV data file.
+ */
 const countStudents = (dataPath) => new Promise((resolve, reject) => {
   if (!dataPath) {
     reject(new Error('Cannot load the database'));
@@ -88,8 +91,6 @@ app.get('/students', (_, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on PORT ${PORT}`);
 });
-
-module.exports = app;
 // // Require express to create the server
 // const express = require('express');
 // const countStudents = require('./3-read_file_async');
@@ -125,4 +126,6 @@ module.exports = app;
 // });
 
 // // Export the app for use in other modules
-// module.exports = app;
+
+module.exports = app;
+
