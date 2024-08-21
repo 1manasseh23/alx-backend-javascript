@@ -6,12 +6,12 @@ const PORT = 1245;
 
 // Define the route for the root path "/"
 app.get('/', (_, res) => {
-    res.send('Hello Holberton School!');
+  res.send('Hello Holberton School!');
 });
 
 // The server listens on port 1245
 app.listen(PORT, () => {
-    console.log('Server is running on port 1245');
+  console.log('Server is running on port 1245');
 });
 
 // Export the app for use in other modules
